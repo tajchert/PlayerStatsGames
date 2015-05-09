@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import pl.tajchert.playerstats.api.ApiWarThunder;
 
 /**
  * Created by Michal Tajchert on 2015-05-09.

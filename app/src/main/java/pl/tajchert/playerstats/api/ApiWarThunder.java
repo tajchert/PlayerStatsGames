@@ -1,4 +1,4 @@
-package pl.tajchert.playerstats;
+package pl.tajchert.playerstats.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;

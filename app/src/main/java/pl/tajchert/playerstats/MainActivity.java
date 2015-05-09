@@ -28,8 +28,10 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import pl.tajchert.playerstats.api.Api;
+import pl.tajchert.playerstats.api.ApiWarThunder;
+import pl.tajchert.playerstats.api.ApiWotUserList;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -73,13 +75,20 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         setSupportActionBar(toolbar);
         setSpinnerGameSelection();
         swipeRefresh.setOnRefreshListener(this);
-        swipeRefresh.setColorSchemeColors(Color.DKGRAY, Color.GRAY, Color.BLUE);
+        swipeRefresh.setColorSchemeColors(Color.DKGRAY, Color.GRAY, Color.BLACK);
 
         userNameEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    getWarThunderUser(userNameEdit.getText().toString());
+                if (event.getAction() != KeyEvent.ACTION_DOWN)
+                    return false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    swipeRefresh.setRefreshing(true);
+                    if(spinnerGameSelection.getSelectedItemId() == 0) {
+                        searchWarThunder(userNameEdit.getText().toString());
+                    } else if (spinnerGameSelection.getSelectedItemId() == 1){
+                        searchWot(userNameEdit.getText().toString());
+                    }
                     return true;
                 }
                 return false;
@@ -90,6 +99,65 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mRecyclerView.setLayoutManager(mLayoutManager);
 
     }
+
+    private void searchWarThunder(String username) {
+        Callback<ApiWarThunder> apiWarThunderCallback = new Callback<ApiWarThunder>() {
+            @Override
+            public void success(ApiWarThunder articleContent, Response response) {
+                Log.d(TAG, "success :" + articleContent.getResults().toString());
+                if (articleContent.getResults() != null && articleContent.getResults().size() > 0) {
+                    ApiWarThunder.Result mainResult = articleContent.getResults().get(0);
+                    if (articleContent.getResults().size() >= 2) {
+                        mainResult.merge(articleContent.getResults().get(1));
+                        mainResult.merge(articleContent.getResults().get(2));
+                    }
+                    ArrayList<ApiWarThunder.Result> results = new ArrayList<ApiWarThunder.Result>();
+                    results.add(mainResult);
+                    mAdapter = new UserListAdapter(results);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+                if (swipeRefresh != null) {
+                    swipeRefresh.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                if(retrofitError.isNetworkError()) {
+                    //post no Internet event
+                }
+                Log.d(TAG, "failure :" + retrofitError.getLocalizedMessage());
+                if (swipeRefresh != null) {
+                    swipeRefresh.setRefreshing(false);
+                }
+            }
+        };
+        Api.getWarThunderUser(username, apiWarThunderCallback);
+    }
+
+    private void searchWot(String username) {
+        Callback<ApiWotUserList> apiWotUserListCallback = new Callback<ApiWotUserList>() {
+            @Override
+            public void success(ApiWotUserList articleContent, Response response) {
+                Log.d(TAG, "success :" + articleContent.dataTop.getResult().toString());
+                Log.d(TAG, "success user data: "+ articleContent.dataTop.getResult().getUserData("primosz_pl"));
+
+                if (swipeRefresh != null) {
+                    swipeRefresh.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Log.d(TAG, "failure :" + retrofitError.getLocalizedMessage());
+                if (swipeRefresh != null) {
+                    swipeRefresh.setRefreshing(false);
+                }
+            }
+        };
+        Api.getWotUserList(username, apiWotUserListCallback);
+    }
+
 
     private void setSpinnerGameSelection(){
         ArrayList<String> games = new ArrayList();
@@ -161,42 +229,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         super.onCreate(savedInstanceState, persistentState);
     }
 
-    private void getWarThunderUser(String username){
-        swipeRefresh.setRefreshing(true);
-        //username = "http://warthunder.com/en/community/userinfo/nick=" + username;
-        final RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(ApiConstants.API_URL_IMPORTIO)
-                .build();
-        IWarThunderApi articleGetter = restAdapter.create(IWarThunderApi.class);
-        articleGetter.getUpWorthyCategory(username, ApiConstants.IMPORTIO_API_USER_KEY, ApiConstants.IMPORTIO_API_KEY, new Callback<ApiWarThunder>() {
-            @Override
-            public void success(ApiWarThunder articleContent, Response response) {
-                Log.d(TAG, "success :" + articleContent.getResults().toString());
-                if (articleContent.getResults() != null && articleContent.getResults().size() > 0) {
-                    ApiWarThunder.Result mainResult = articleContent.getResults().get(0);
-                    if (articleContent.getResults().size() >= 2) {
-                        mainResult.merge(articleContent.getResults().get(1));
-                        mainResult.merge(articleContent.getResults().get(2));
-                    }
-                    ArrayList<ApiWarThunder.Result> results = new ArrayList<ApiWarThunder.Result>();
-                    results.add(mainResult);
-                    mAdapter = new UserListAdapter(results);
-                    mRecyclerView.setAdapter(mAdapter);
-                }
-                if(swipeRefresh != null) {
-                    swipeRefresh.setRefreshing(false);
-                }
-            }
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                Log.d(TAG, "failure :" + retrofitError.getLocalizedMessage());
-                if(swipeRefresh != null) {
-                    swipeRefresh.setRefreshing(false);
-                }
-            }
-        });
-    }
 
     @Override
     public void onRefresh() {
