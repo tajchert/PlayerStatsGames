@@ -1,7 +1,10 @@
 package pl.tajchert.playerstats;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 public class ApiWarThunder {
 
     private Integer offset;
@@ -121,7 +124,6 @@ public class ApiWarThunder {
 
 
     public class Result {
-
         private String clan;
         private String name;
         private String registration;
@@ -130,37 +132,20 @@ public class ApiWarThunder {
         private List<String> japan = new ArrayList<String>();
         private List<String> germany = new ArrayList<String>();
         private List<String> ussr = new ArrayList<String>();
-        private String groundTargets;
-        private String winRatio;
-        private String battleTime;
+        private List<String> groundTargets = new ArrayList<String>();
+        private List<String> winRatio = new ArrayList<String>();
+        private List<String> battleTime = new ArrayList<String>();
         private List<String> victories = new ArrayList<String>();
-        private String attackerTime;
-        private String playTime;
+        private List<String> attackerTime = new ArrayList<String>();
+        private List<String> playTime = new ArrayList<String>();
         private List<String> airTargets = new ArrayList<String>();
-        private String bomberTime;
-        private String lions;
+        private List<String> bomberTime = new ArrayList<String>();
+        private List<String> lions = new ArrayList<String>();
         private List<String> missions = new ArrayList<String>();
-        private String xp;
+        private List<String> xp = new ArrayList<String>();
         private List<String> flyouts = new ArrayList<String>();
-        private String deaths;
-
-        /**
-         *
-         * @return
-         * The clan
-         */
-        public String getClan() {
-            return clan;
-        }
-
-        /**
-         *
-         * @param clan
-         * The clan
-         */
-        public void setClan(String clan) {
-            this.clan = clan;
-        }
+        private List<String> deaths = new ArrayList<String>();
+        private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
         /**
          *
@@ -293,7 +278,7 @@ public class ApiWarThunder {
          * @return
          * The groundTargets
          */
-        public String getGroundTargets() {
+        public List<String> getGroundTargets() {
             return groundTargets;
         }
 
@@ -302,7 +287,7 @@ public class ApiWarThunder {
          * @param groundTargets
          * The ground_targets
          */
-        public void setGroundTargets(String groundTargets) {
+        public void setGroundTargets(List<String> groundTargets) {
             this.groundTargets = groundTargets;
         }
 
@@ -311,7 +296,7 @@ public class ApiWarThunder {
          * @return
          * The winRatio
          */
-        public String getWinRatio() {
+        public List<String> getWinRatio() {
             return winRatio;
         }
 
@@ -320,7 +305,7 @@ public class ApiWarThunder {
          * @param winRatio
          * The win_ratio
          */
-        public void setWinRatio(String winRatio) {
+        public void setWinRatio(List<String> winRatio) {
             this.winRatio = winRatio;
         }
 
@@ -329,7 +314,7 @@ public class ApiWarThunder {
          * @return
          * The battleTime
          */
-        public String getBattleTime() {
+        public List<String> getBattleTime() {
             return battleTime;
         }
 
@@ -338,7 +323,7 @@ public class ApiWarThunder {
          * @param battleTime
          * The battle_time
          */
-        public void setBattleTime(String battleTime) {
+        public void setBattleTime(List<String> battleTime) {
             this.battleTime = battleTime;
         }
 
@@ -365,7 +350,7 @@ public class ApiWarThunder {
          * @return
          * The attackerTime
          */
-        public String getAttackerTime() {
+        public List<String> getAttackerTime() {
             return attackerTime;
         }
 
@@ -374,7 +359,7 @@ public class ApiWarThunder {
          * @param attackerTime
          * The attacker_time
          */
-        public void setAttackerTime(String attackerTime) {
+        public void setAttackerTime(List<String> attackerTime) {
             this.attackerTime = attackerTime;
         }
 
@@ -383,7 +368,7 @@ public class ApiWarThunder {
          * @return
          * The playTime
          */
-        public String getPlayTime() {
+        public List<String> getPlayTime() {
             return playTime;
         }
 
@@ -392,7 +377,7 @@ public class ApiWarThunder {
          * @param playTime
          * The play_time
          */
-        public void setPlayTime(String playTime) {
+        public void setPlayTime(List<String> playTime) {
             this.playTime = playTime;
         }
 
@@ -419,7 +404,7 @@ public class ApiWarThunder {
          * @return
          * The bomberTime
          */
-        public String getBomberTime() {
+        public List<String> getBomberTime() {
             return bomberTime;
         }
 
@@ -428,7 +413,7 @@ public class ApiWarThunder {
          * @param bomberTime
          * The bomber_time
          */
-        public void setBomberTime(String bomberTime) {
+        public void setBomberTime(List<String> bomberTime) {
             this.bomberTime = bomberTime;
         }
 
@@ -437,7 +422,7 @@ public class ApiWarThunder {
          * @return
          * The lions
          */
-        public String getLions() {
+        public List<String> getLions() {
             return lions;
         }
 
@@ -446,7 +431,7 @@ public class ApiWarThunder {
          * @param lions
          * The lions
          */
-        public void setLions(String lions) {
+        public void setLions(List<String> lions) {
             this.lions = lions;
         }
 
@@ -473,7 +458,7 @@ public class ApiWarThunder {
          * @return
          * The xp
          */
-        public String getXp() {
+        public List<String> getXp() {
             return xp;
         }
 
@@ -482,7 +467,7 @@ public class ApiWarThunder {
          * @param xp
          * The xp
          */
-        public void setXp(String xp) {
+        public void setXp(List<String> xp) {
             this.xp = xp;
         }
 
@@ -509,7 +494,7 @@ public class ApiWarThunder {
          * @return
          * The deaths
          */
-        public String getDeaths() {
+        public List<String> getDeaths() {
             return deaths;
         }
 
@@ -518,7 +503,7 @@ public class ApiWarThunder {
          * @param deaths
          * The deaths
          */
-        public void setDeaths(String deaths) {
+        public void setDeaths(List<String> deaths) {
             this.deaths = deaths;
         }
 
@@ -547,6 +532,73 @@ public class ApiWarThunder {
                     ", flyouts=" + flyouts +
                     ", deaths='" + deaths + '\'' +
                     '}';
+        }
+
+        public Result merge(Result result) {
+            if(this.clan == null) {
+                this.clan = result.clan;
+            }
+            if(this.name == null) {
+                this.name = result.name;
+            }
+            if(this.registration == null) {
+                this.registration = result.registration;
+            }
+            if(this.usa == null) {
+                this.usa = result.usa;
+            }
+            if(this.britain == null) {
+                this.britain = result.britain;
+            }
+            if(this.japan == null) {
+                this.japan = result.japan;
+            }
+            if(this.germany == null) {
+                this.germany = result.germany;
+            }
+            if(this.ussr == null) {
+                this.ussr = result.ussr;
+            }
+            if(this.groundTargets == null) {
+                this.groundTargets = result.groundTargets;
+            }
+            if(this.winRatio == null) {
+                this.winRatio = result.winRatio;
+            }
+            if(this.battleTime == null) {
+                this.battleTime = result.battleTime;
+            }
+            if(this.victories == null) {
+                this.victories = result.victories;
+            }
+            if(this.attackerTime == null) {
+                this.attackerTime = result.attackerTime;
+            }
+            if(this.playTime == null) {
+                this.playTime = result.playTime;
+            }
+            if(this.airTargets == null) {
+                this.airTargets = result.airTargets;
+            }
+            if(this.bomberTime == null) {
+                this.bomberTime = result.bomberTime;
+            }
+            if(this.lions == null) {
+                this.lions = result.lions;
+            }
+            if(this.missions == null) {
+                this.missions = result.missions;
+            }
+            if(this.xp == null) {
+                this.xp = result.xp;
+            }
+            if(this.flyouts == null) {
+                this.flyouts = result.flyouts;
+            }
+            if(this.deaths == null) {
+                this.deaths = result.deaths;
+            }
+            return this;
         }
     }
 }
