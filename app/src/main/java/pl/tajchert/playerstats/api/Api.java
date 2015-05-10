@@ -19,11 +19,18 @@ public class Api {
     }
 
     public static void getWotUserList(String username, Callback<ApiWotUserList> wotUserListCallback){
-        //username = "http://warthunder.com/en/community/userinfo/nick=" + username;
         final RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(ApiConstants.API_URL_WOT)
                 .build();
-        IWotApi thunderApi = restAdapter.create(IWotApi.class);
-        thunderApi.getWotUserId(username, "2015-5-8", wotUserListCallback);
+        IWotApi wotApi = restAdapter.create(IWotApi.class);
+        wotApi.getWotUserId(username, "2015-5-8", wotUserListCallback);
+    }
+
+    public static void getWotUserStats(String username, String userId, Callback<ApiWotStats> wotStatsCallback){
+        final RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(ApiConstants.API_URL_IMPORTIO + "/_query?input/webpage/url="+ ApiConstants.API_URL_WOT_STATS+userId+"-"+ username)
+                .build();
+        IWotApi wotApi = restAdapter.create(IWotApi.class);
+        wotApi.getUserStats(ApiConstants.IMPORTIO_API_USER_KEY, ApiConstants.IMPORTIO_API_KEY_WOT, wotStatsCallback);
     }
 }
