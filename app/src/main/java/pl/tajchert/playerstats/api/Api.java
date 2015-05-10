@@ -28,7 +28,7 @@ public class Api {
 
     public static void getWotUserStats(String username, String userId, Callback<ApiWotStats> wotStatsCallback){
         final RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(ApiConstants.API_URL_IMPORTIO + "/_query?input/webpage/url="+ ApiConstants.API_URL_WOT_STATS+userId+"-"+ username)
+                .setEndpoint(ApiConstants.API_URL_IMPORTIO + "/88818fe3-436f-4242-9d16-8b07992bc7b1/_query?input/webpage/url="+ ApiConstants.API_URL_WOT_STATS+userId+"-"+ username)
                 .build();
         IWotApi wotApi = restAdapter.create(IWotApi.class);
         wotApi.getUserStats(ApiConstants.IMPORTIO_API_USER_KEY, ApiConstants.IMPORTIO_API_KEY_WOT, wotStatsCallback);

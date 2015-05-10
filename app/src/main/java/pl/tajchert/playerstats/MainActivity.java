@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     }
                     ArrayList<ApiWarThunder.Result> results = new ArrayList<ApiWarThunder.Result>();
                     results.add(mainResult);
-                    mAdapter = new UserListAdapter(results);
+                    mAdapter = new WtListAdapter(results);
                     mRecyclerView.setAdapter(mAdapter);
                 }
                 if (swipeRefresh != null) {

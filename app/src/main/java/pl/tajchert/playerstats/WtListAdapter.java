@@ -15,7 +15,7 @@ import pl.tajchert.playerstats.api.ApiWarThunder;
 /**
  * Created by Michal Tajchert on 2015-05-09.
  */
-public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserStatsCard> {
+public class WtListAdapter extends RecyclerView.Adapter<WtListAdapter.UserStatsCard> {
     private ArrayList<ApiWarThunder.Result> mDataset;
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
@@ -25,7 +25,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserSt
         }
     }
 
-    public UserListAdapter(ArrayList<ApiWarThunder.Result> myDataset) {
+    public WtListAdapter(ArrayList<ApiWarThunder.Result> myDataset) {
         mDataset = myDataset;
     }
 
