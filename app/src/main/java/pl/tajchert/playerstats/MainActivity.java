@@ -169,7 +169,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             public void success(ApiWotStats responseObject, Response response) {
                 if(responseObject != null && responseObject.results != null && responseObject.results.size() > 0 && responseObject.results.get(0) != null) {
                     Log.d(TAG, "success :" + responseObject.results.get(0).toString());
-
+                    mAdapter = new WotListAdapter((ArrayList) responseObject.results);
+                    mRecyclerView.setAdapter(mAdapter);
                 }
 
 

@@ -1,9 +1,9 @@
 package pl.tajchert.playerstats.api;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ApiWarThunder {
 
@@ -132,20 +132,26 @@ public class ApiWarThunder {
         private List<String> japan = new ArrayList<String>();
         private List<String> germany = new ArrayList<String>();
         private List<String> ussr = new ArrayList<String>();
+        @SerializedName("ground_targets")
         private List<String> groundTargets = new ArrayList<String>();
+        @SerializedName("win_ratio")
         private List<String> winRatio = new ArrayList<String>();
+        @SerializedName("battle_time")
         private List<String> battleTime = new ArrayList<String>();
         private List<String> victories = new ArrayList<String>();
+        @SerializedName("attacker_time")
         private List<String> attackerTime = new ArrayList<String>();
+        @SerializedName("play_time")
         private List<String> playTime = new ArrayList<String>();
+        @SerializedName("air_targets")
         private List<String> airTargets = new ArrayList<String>();
+        @SerializedName("bomber_time")
         private List<String> bomberTime = new ArrayList<String>();
         private List<String> lions = new ArrayList<String>();
         private List<String> missions = new ArrayList<String>();
         private List<String> xp = new ArrayList<String>();
         private List<String> flyouts = new ArrayList<String>();
         private List<String> deaths = new ArrayList<String>();
-        private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
         /**
          *

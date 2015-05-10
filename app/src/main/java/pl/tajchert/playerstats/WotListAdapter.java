@@ -9,14 +9,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import pl.tajchert.playerstats.api.ApiWarThunder;
+import pl.tajchert.playerstats.api.ApiWotStats;
 
 /**
  * Created by Michal Tajchert on 2015-05-09.
  */
 public class WotListAdapter extends RecyclerView.Adapter<WotListAdapter.UserStatsCard> {
-    private ArrayList<ApiWarThunder.Result> mDataset;
+    private ArrayList<ApiWotStats.WotUserStats> mDataset;
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
         public ViewHolder(TextView v) {
@@ -25,7 +24,7 @@ public class WotListAdapter extends RecyclerView.Adapter<WotListAdapter.UserStat
         }
     }
 
-    public WotListAdapter(ArrayList<ApiWarThunder.Result> myDataset) {
+    public WotListAdapter(ArrayList<ApiWotStats.WotUserStats> myDataset) {
         mDataset = myDataset;
     }
 
@@ -38,9 +37,9 @@ public class WotListAdapter extends RecyclerView.Adapter<WotListAdapter.UserStat
 
     @Override
     public void onBindViewHolder(UserStatsCard userStatsCard, int i) {
-        ApiWarThunder.Result user = mDataset.get(i);
+        ApiWotStats.WotUserStats user = mDataset.get(i);
         if(user != null) {
-            userStatsCard.infoText.setText(user.toString());
+            //userStatsCard.infoText.setText(user.toString());
         }
     }
 
@@ -50,8 +49,7 @@ public class WotListAdapter extends RecyclerView.Adapter<WotListAdapter.UserStat
     }
 
     public class UserStatsCard extends RecyclerView.ViewHolder {
-        @InjectView(R.id.info_text)
-        TextView infoText;
+
 
         public UserStatsCard(View itemView) {
             super(itemView);
