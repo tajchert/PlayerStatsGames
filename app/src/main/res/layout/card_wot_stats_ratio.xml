@@ -13,54 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:text="Tanks destroyed/lost"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#000" />
 
             <TextView
-                android:id="@+id/wot_ratio_tanks"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:text="X"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#000"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/wot_ratio_tanks_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="X/X"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#000" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-light"
@@ -68,27 +39,71 @@
                 android:text="Damage caused/received"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#000" />
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/wot_ratio_damage"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:text="X"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#000"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/wot_ratio_damge_detail"
-                android:layout_width="match_parent"
+
+                <TextView
+                    android:id="@+id/wot_ratio_tanks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="X"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/wot_ratio_tanks_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="X/X"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="X/X"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#000" />
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/wot_ratio_damage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="X"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/wot_ratio_damge_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="X/X"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#000" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

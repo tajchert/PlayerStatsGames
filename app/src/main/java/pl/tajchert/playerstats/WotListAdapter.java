@@ -1,11 +1,20 @@
 package pl.tajchert.playerstats;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.charts.RadarChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.RadarData;
+import com.github.mikephil.charting.data.RadarDataSet;
 
 import java.util.ArrayList;
 
@@ -25,6 +34,8 @@ public class WotListAdapter extends RecyclerView.Adapter<WotListAdapter.GenericH
         this.context = context;
         mDataset = myDataset;
         if(mDataset.size() == 1) {
+            mDataset.add(mDataset.get(0));
+            mDataset.add(mDataset.get(0));
             mDataset.add(mDataset.get(0));
             mDataset.add(mDataset.get(0));
             mDataset.add(mDataset.get(0));
@@ -48,9 +59,17 @@ public class WotListAdapter extends RecyclerView.Adapter<WotListAdapter.GenericH
             return new CardWotNations(itemView);
         } else if(viewType == 3) {
             itemView = LayoutInflater.from(parent.getContext()).
+                    inflate(R.layout.card_wot_stats_nations_chart, parent, false);
+            return new CardWotNationsChart(itemView);
+        } else if(viewType == 4) {
+            itemView = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.card_wot_stats_tank_types, parent, false);
             return new CardWotTankTypes(itemView);
-        } else {
+        } else if(viewType == 5) {
+            itemView = LayoutInflater.from(parent.getContext()).
+                    inflate(R.layout.card_wot_stats_tank_types_chart, parent, false);
+            return new CardWotTankTypesChart(itemView);
+        }  else {
             itemView = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.card_wot_stats_top, parent, false);
             return new GenericHolder(itemView);
@@ -92,6 +111,74 @@ public class WotListAdapter extends RecyclerView.Adapter<WotListAdapter.GenericH
                 ((CardWotTankTypes) userStatsCard).medium.setText(user.tanksMed);
                 ((CardWotTankTypes) userStatsCard).td.setText(user.tankTd);
                 ((CardWotTankTypes) userStatsCard).arty.setText(user.tanksSpg);
+            } else if( userStatsCard instanceof CardWotNationsChart) {
+                ArrayList<Entry> yVals = new ArrayList<Entry>();
+                ArrayList<String> xVals = new ArrayList<String>();
+                xVals.add("USSR");
+                yVals.add(new Entry(Float.parseFloat(user.nationUssr.substring(0, user.nationUssr.indexOf(" (")).replace(",", "").trim()),0));
+                xVals.add("Germany");
+                yVals.add(new Entry(Float.parseFloat(user.nationGermany.substring(0, user.nationGermany.indexOf(" (")).replace(",","").trim()),1));
+                xVals.add("USA");
+                yVals.add(new Entry(Float.parseFloat(user.nationUsa.substring(0, user.nationUsa.indexOf(" (")).replace(",","").trim()),2));
+                xVals.add("France");
+                yVals.add(new Entry(Float.parseFloat(user.nationFrance.substring(0, user.nationFrance.indexOf(" (")).replace(",","").trim()),3));
+                xVals.add("Great Britain");
+                yVals.add(new Entry(Float.parseFloat(user.nationUk.substring(0, user.nationUk.indexOf(" (")).replace(",", "").trim()), 4));
+                xVals.add("China");
+                yVals.add(new Entry(Float.parseFloat(user.nationChina.substring(0, user.nationChina.indexOf(" (")).replace(",", "").trim()), 5));
+                xVals.add("Japan");
+                yVals.add(new Entry(Float.parseFloat(user.nationJapan.substring(0, user.nationJapan.indexOf(" (")).replace(",", "").trim()), 6));
+                PieChart chart = ((CardWotNationsChart) userStatsCard).chartNations;
+                chart.setRotationEnabled(false);
+                PieDataSet setTanks = new PieDataSet(yVals, "");
+                setTanks.setSliceSpace(3f);
+                setTanks.setSelectionShift(5f);
+                //setTanks.setColor(context.getResources().getColor(R.color.theme_main));
+                setTanks.setDrawValues(false);
+                int[] colors = {Color.parseColor("#831818"), Color.parseColor("#814f07"), Color.parseColor("#496877"), Color.parseColor("#2c2f54"), Color.parseColor("#2b591f"), Color.parseColor("#471952"), Color.parseColor("#8b8b8a")};
+                setTanks.setColors(colors);
+
+                PieData data = new PieData(xVals, setTanks);
+                data.setValueTextSize(11f);
+                data.setValueTextColor(Color.BLACK);
+                chart.setData(data);
+                chart.getLegend().setEnabled(false);
+                chart.setDescription("");
+                chart.invalidate();
+            } else if( userStatsCard instanceof CardWotTankTypesChart) {
+                ArrayList<Entry> yVals = new ArrayList<Entry>();
+                ArrayList<String> xVals = new ArrayList<String>();
+                xVals.add("Light");
+                yVals.add(new Entry(Float.parseFloat(user.tanksLight.substring(0, user.tanksLight.indexOf(" (")).replace(",", "").trim()),0));
+                xVals.add("Medium");
+                yVals.add(new Entry(Float.parseFloat(user.tanksMed.substring(0, user.tanksMed.indexOf(" (")).replace(",","").trim()),1));
+                xVals.add("Heavy");
+                yVals.add(new Entry(Float.parseFloat(user.tanksHeavy.substring(0, user.tanksHeavy.indexOf(" (")).replace(",","").trim()),2));
+                xVals.add("TD");
+                yVals.add(new Entry(Float.parseFloat(user.tankTd.substring(0, user.tankTd.indexOf(" (")).replace(",","").trim()),3));
+                xVals.add("Arty");
+                yVals.add(new Entry(Float.parseFloat(user.tanksSpg.substring(0, user.tanksSpg.indexOf(" (")).replace(",", "").trim()), 4));
+                RadarChart chart = ((CardWotTankTypesChart) userStatsCard).chartTankTypes;
+                chart.setRotationEnabled(false);
+                RadarDataSet setTanks = new RadarDataSet(yVals, "");
+                setTanks.setColor(context.getResources().getColor(R.color.theme_main));
+                setTanks.setDrawFilled(true);
+                setTanks.setLineWidth(2f);
+                setTanks.setValueTextSize(9f);
+
+                ArrayList<RadarDataSet> sets = new ArrayList<RadarDataSet>();
+                sets.add(setTanks);
+                RadarData data = new RadarData(xVals, sets);
+                /*ArrayList<RadarDataSet> sets = (ArrayList<RadarDataSet>) chart.getData() .getDataSets();
+                for (RadarDataSet set : sets) {
+                    set.setDrawFilled(true);
+                }*/
+                chart.getXAxis().setEnabled(true);
+                chart.getYAxis().setEnabled(false);
+                chart.setData(data);
+                //chart.getLegend().setEnabled(false);
+                chart.setDescription("");
+                chart.invalidate();
             }
             //userStatsCard.infoText.setText(user.toString());
         }
@@ -201,6 +288,28 @@ public class WotListAdapter extends RecyclerView.Adapter<WotListAdapter.GenericH
 
 
         public CardWotTankTypes(View itemView) {
+            super(itemView);
+            ButterKnife.inject(this, itemView);
+        }
+    }
+
+    public class CardWotTankTypesChart extends GenericHolder {
+
+        @InjectView(R.id.chartTankType)
+        RadarChart chartTankTypes;
+
+        public CardWotTankTypesChart(View itemView) {
+            super(itemView);
+            ButterKnife.inject(this, itemView);
+        }
+    }
+
+    public class CardWotNationsChart extends GenericHolder {
+
+        @InjectView(R.id.chartNations)
+        PieChart chartNations;
+
+        public CardWotNationsChart(View itemView) {
             super(itemView);
             ButterKnife.inject(this, itemView);
         }
