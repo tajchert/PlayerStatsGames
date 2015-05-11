@@ -1,6 +1,7 @@
 package pl.tajchert.playerstats;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -16,9 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 import pl.tajchert.playerstats.api.Api;
 import pl.tajchert.playerstats.api.ApiWarThunder;
 import pl.tajchert.playerstats.api.ApiWotStats;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     Spinner spinnerGameSelection;
 
     @InjectView(R.id.inputName)
-    EditText userNameEdit;
+    AutoCompleteTextView userNameEdit;
 
     @InjectView(R.id.my_recycler_view)
     RecyclerView mRecyclerView;
@@ -86,9 +87,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     return false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     swipeRefresh.setRefreshing(true);
-                    if(spinnerGameSelection.getSelectedItemId() == 0) {
+                    if (spinnerGameSelection.getSelectedItemId() == 0) {
                         searchWarThunder(userNameEdit.getText().toString());
-                    } else if (spinnerGameSelection.getSelectedItemId() == 1){
+                    } else if (spinnerGameSelection.getSelectedItemId() == 1) {
                         searchWot(userNameEdit.getText().toString());
                     }
                     return true;
@@ -96,6 +97,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 return false;
             }
         });
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_dropdown_item_1line, getSearches());
+        userNameEdit.setAdapter(adapter);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -117,10 +121,12 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     results.add(mainResult);
                     mAdapter = new WtListAdapter(results, MainActivity.this);
                     mRecyclerView.setAdapter(mAdapter);
+                } else {
+                    //Show no results
+                    mAdapter = new SimpleListAdapter();
+                    mRecyclerView.setAdapter(mAdapter);
                 }
-                if (swipeRefresh != null) {
-                    swipeRefresh.setRefreshing(false);
-                }
+                showResults();
             }
 
             @Override
@@ -150,6 +156,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     if (swipeRefresh != null) {
                         swipeRefresh.setRefreshing(false);
                     }
+                    //Show no results
+                    mAdapter = new SimpleListAdapter();
+                    mRecyclerView.setAdapter(mAdapter);
                 }
             }
 
@@ -170,14 +179,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             public void success(ApiWotStats responseObject, Response response) {
                 if(responseObject != null && responseObject.results != null && responseObject.results.size() > 0 && responseObject.results.get(0) != null) {
                     Log.d(TAG, "success :" + responseObject.results.get(0).toString());
-                    mAdapter = new WotListAdapter((ArrayList) responseObject.results);
+                    mAdapter = new WotListAdapter((ArrayList) responseObject.results, MainActivity.this);
+                    mRecyclerView.setAdapter(mAdapter);
+                } else {
+                    //Show no results
+                    mAdapter = new SimpleListAdapter();
                     mRecyclerView.setAdapter(mAdapter);
                 }
-
-
-                if (swipeRefresh != null) {
-                    swipeRefresh.setRefreshing(false);
-                }
+                showResults();
             }
 
             @Override
@@ -191,27 +200,49 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         Api.getWotUserStats(username, userId, apiWotStatsCallback);
     }
 
+    private void saveSeachResult(String search) {
+        if("null".equals(search) || "".equals(search)) {
+            return;
+        }
+        SharedPreferences prefs = getSharedPreferences(Tools.PREFS_KEY, Context.MODE_PRIVATE);
+        String[] prevSearches = prefs.getString(Tools.PREFS_SEARCHES_KEY, "").split(";;;");
+        String[] newSearches = new String[prevSearches.length + 1];
+        newSearches[prevSearches.length] = search;
+
+        boolean isRepeated = false;
+        for(int i = 0; i < prevSearches.length; i++) {
+            if(!prevSearches[i].equals(search) && !"null".equals(prevSearches[i])) {
+                newSearches[i] = prevSearches[i];
+            }
+            if(prevSearches[i].equals(search)) {
+                isRepeated = true;
+            }
+        }
+        if(isRepeated) {
+            return;
+        }
+        String result = "";
+        for(String str : newSearches) {
+            result += str +";;;";
+        }
+        result = result.substring(0, result.length() - 3);
+        prefs.edit().putString(Tools.PREFS_SEARCHES_KEY, result).apply();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_dropdown_item_1line, getSearches());
+        userNameEdit.setAdapter(adapter);
+    }
+
+    private String[] getSearches() {
+        SharedPreferences prefs = getSharedPreferences(Tools.PREFS_KEY, Context.MODE_PRIVATE);
+        return prefs.getString(Tools.PREFS_SEARCHES_KEY, "").split(";;;");
+    }
 
     private void setSpinnerGameSelection(){
         ArrayList<String> games = new ArrayList();
         games.add("War Thunder");
         games.add("World Of Tanks");
-        games.add("Starcraft 2");
         ArrayAdapter<String> gamesAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, games);
         gamesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGameSelection.setAdapter(gamesAdapter);
-
-        spinnerGameSelection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(TAG, "onItemSelected :" + i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 
     @OnClick(R.id.firstEdit)
@@ -233,6 +264,36 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         dummyView.setVisibility(View.GONE);
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(userNameEdit.getWindowToken(), 0);
+    }
+
+    private void showResults() {
+        saveSeachResult(userNameEdit.getText().toString());
+        if (swipeRefresh != null) {
+            swipeRefresh.setRefreshing(false);
+        }
+        linearSecondLayout.setVisibility(View.GONE);
+        dummyView.setVisibility(View.GONE);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(userNameEdit.getWindowToken(), 0);
+    }
+
+    public void onEvent(AutoCompleteDetect.EventKeyboardClosed eventKeyboardClosed) {
+        linearSecondLayout.setVisibility(View.GONE);
+        dummyView.setVisibility(View.GONE);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(userNameEdit.getWindowToken(), 0);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        EventBus.getDefault().unregister(this);
+        super.onPause();
     }
 
     @Override

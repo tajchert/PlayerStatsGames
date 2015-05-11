@@ -18,8 +18,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:gravity="center"
-            android:text="Rating"
+            android:text="Battle rating"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000" />
 
@@ -27,15 +28,17 @@
             android:id="@+id/wot_rating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
             android:gravity="center"
             android:text="XX XXX"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#000" />
+            android:textColor="#000"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -48,6 +51,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="Battles"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -57,10 +61,12 @@
                     android:id="@+id/wot_battles"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="X"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -74,6 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="Win ratio"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -84,10 +91,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="X"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
@@ -107,6 +116,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="Avg. Experience"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -116,10 +126,12 @@
                     android:id="@+id/wot_avg_exp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="X"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -133,6 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="Avg. Damage"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -143,10 +156,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="X"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

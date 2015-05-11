@@ -3,6 +3,7 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="15dp"
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginRight="@dimen/activity_horizontal_margin"
     android:layout_marginTop="15dp"
@@ -19,8 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="Nations"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:fontFamily="sans-serif-light"
+            android:text="Tank types"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#ff6b6b6b" />
 
         <TableLayout
@@ -36,6 +38,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="Light tanks"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -47,10 +50,12 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="XXXX (X%)"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
             </TableRow>
 
@@ -64,6 +69,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="Medium tanks"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -75,10 +81,12 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="XXXX (X%)"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
             </TableRow>
 
@@ -92,6 +100,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="Heavy tanks"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -103,10 +112,12 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="XXXX (X%)"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
             </TableRow>
 
@@ -120,6 +131,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="Tank Destroyers"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -131,10 +143,12 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="XXXX (X%)"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
             </TableRow>
 
@@ -148,6 +162,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="Artillery"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -159,10 +174,12 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="XXXX (X%)"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
             </TableRow>
         </TableLayout>
