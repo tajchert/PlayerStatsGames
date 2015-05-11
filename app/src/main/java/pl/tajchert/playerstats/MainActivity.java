@@ -87,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     return false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     swipeRefresh.setRefreshing(true);
+                    if(userNameEdit!= null) {
+                        userNameEdit.dismissDropDown();
+                    }
                     if (spinnerGameSelection.getSelectedItemId() == 0) {
                         searchWarThunder(userNameEdit.getText().toString());
                     } else if (spinnerGameSelection.getSelectedItemId() == 1) {
@@ -148,10 +151,19 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void success(ApiWotUserList responseObject, Response response) {
                 Log.d(TAG, "success :" + responseObject.dataTop.getResult().toString());
-                String userId = responseObject.dataTop.getResult().getUserData(username).get(0);
-                Log.d(TAG, "success id: " + userId);
-                if(userId != null) {
-                    searchWotStats(username, userId);
+                if(responseObject!= null && responseObject.dataTop != null && responseObject.dataTop.getResult() != null ) {
+                    String userId = responseObject.dataTop.getResult().getUserData(username).get(0);
+                    Log.d(TAG, "success id: " + userId);
+                    if(userId != null) {
+                        searchWotStats(username, userId);
+                    } else {
+                        if (swipeRefresh != null) {
+                            swipeRefresh.setRefreshing(false);
+                        }
+                        //Show no results
+                        mAdapter = new SimpleListAdapter();
+                        mRecyclerView.setAdapter(mAdapter);
+                    }
                 } else {
                     if (swipeRefresh != null) {
                         swipeRefresh.setRefreshing(false);
@@ -270,6 +282,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         saveSeachResult(userNameEdit.getText().toString());
         if (swipeRefresh != null) {
             swipeRefresh.setRefreshing(false);
+        }
+        if(userNameEdit!= null) {
+            userNameEdit.dismissDropDown();
         }
         linearSecondLayout.setVisibility(View.GONE);
         dummyView.setVisibility(View.GONE);
