@@ -3,7 +3,10 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="15dp"
     android:layout_marginTop="15dp"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
     card_view:cardCornerRadius="1dp"
     card_view:cardElevation="2dp">
 
@@ -57,8 +60,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Victories" />
+                android:text="Victories"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/vicArcade"
@@ -96,8 +99,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Missions" />
+                android:text="Missions"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/missonArcade"
@@ -135,8 +138,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Win ratio" />
+                android:text="Win ratio"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/winRatioArcade"
@@ -174,8 +177,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Flyouts" />
+                android:text="Flyouts"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/flyoutsArcade"
@@ -213,8 +216,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Deaths" />
+                android:text="Deaths"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/deathsArcade"
@@ -252,8 +255,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Fighter" />
+                android:text="Fighter"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/fighterArcade"
@@ -291,8 +294,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Bomber" />
+                android:text="Bomber"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/bomberArcade"
@@ -330,8 +333,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Attacker" />
+                android:text="Attacker"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/attackerArcade"
@@ -369,8 +372,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Air targets" />
+                android:text="Air targets"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/airArcade"
@@ -408,8 +411,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Ground targets" />
+                android:text="Ground targets"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/groundArcade"
@@ -447,8 +450,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Lions" />
+                android:text="Lions"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/lionsArcade"
@@ -486,8 +489,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="XP earned" />
+                android:text="XP earned"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/xpArcade"
@@ -525,8 +528,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#000"
-                android:text="Play time" />
+                android:text="Play time"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/timeArcade"

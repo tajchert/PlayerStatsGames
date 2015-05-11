@@ -1,10 +1,14 @@
 package pl.tajchert.playerstats;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -15,141 +19,214 @@ import pl.tajchert.playerstats.api.ApiWarThunder;
 /**
  * Created by Michal Tajchert on 2015-05-09.
  */
-public class WtListAdapter extends RecyclerView.Adapter<WtListAdapter.UserStatsCard> {
+public class WtListAdapter extends RecyclerView.Adapter<WtListAdapter.GenericHolder> {
     private ArrayList<ApiWarThunder.Result> mDataset;
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
-        public ViewHolder(TextView v) {
-            super(v);
-            mTextView = v;
+    private Context context;
+
+    public WtListAdapter(ArrayList<ApiWarThunder.Result> myDataset, Context context) {
+        this.context = context;
+        mDataset = myDataset;
+        if(mDataset.size() == 1) {
+            mDataset.add(mDataset.get(0));
+            mDataset.add(mDataset.get(0));
         }
     }
 
-    public WtListAdapter(ArrayList<ApiWarThunder.Result> myDataset) {
-        mDataset = myDataset;
+    @Override
+    public GenericHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = null;
+        if(viewType == 0) {
+            //profile card
+            itemView = LayoutInflater.from(parent.getContext()).
+                    inflate(R.layout.card_wt_stats_profile, parent, false);
+            return new WtProfileCard(itemView);
+        } else if (viewType == 1) {
+            //planes
+            itemView = LayoutInflater.from(parent.getContext()).
+                    inflate(R.layout.card_wt_stats_planes, parent, false);
+            return new WtPlanesCard(itemView);
+        } else {
+            //detail
+            itemView = LayoutInflater.from(parent.getContext()).
+                    inflate(R.layout.card_wt_stats_detail, parent, false);
+            return new WtUserDetailStats(itemView);
+        }
     }
 
     @Override
-    public UserStatsCard onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.card_wt_stats, parent, false);
-        return new UserStatsCard(itemView);
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
-    public void onBindViewHolder(UserStatsCard userStatsCard, int i) {
+    public void onBindViewHolder(GenericHolder holder, int i) {
         ApiWarThunder.Result user = mDataset.get(i);
-        if(user != null) {
-            //userStatsCard.infoText.setText(user.toString());
+        if(holder.getItemViewType() == 0) {
+            WtProfileCard wtProfileCard = (WtProfileCard) holder;
+            if(user.getName() != null) {
+                wtProfileCard.userName.setText(user.getName());
+            }
+            if(user.getClan() != null) {
+                wtProfileCard.clan.setText(user.getClan());
+            }
+            if(user.getRegistration() != null) {
+                wtProfileCard.registerDate.setText(user.getRegistration() + "");
+            }
+            if(user.getIcon() != null && user.getIcon().length() > 0) {
+                Glide.with(context).load(user.getIcon()).fitCenter().placeholder(R.drawable.ic_pilot).into(wtProfileCard.profilePic);
+            }
+        } else if(holder.getItemViewType() == 1) {
+            WtPlanesCard wtPlanesCard = (WtPlanesCard) holder;
             try {
-                userStatsCard.vicArcade.setText(user.getVictories().get(0));
-                userStatsCard.vicHis.setText(user.getVictories().get(1));
-                userStatsCard.vicReal.setText(user.getVictories().get(2));
+                wtPlanesCard.usaPlanes.setText(user.getUsa().get(0));
+                wtPlanesCard.usaPlanesElite.setText(user.getUsa().get(1));
+                wtPlanesCard.usaMedals.setText(user.getUsa().get(2));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
             try {
-                userStatsCard.missonArcade.setText(user.getMissions().get(0));
-                userStatsCard.missionHis.setText(user.getMissions().get(1));
-                userStatsCard.missionReal.setText(user.getMissions().get(2));
+                wtPlanesCard.ussrPlanes.setText(user.getUssr().get(0));
+                wtPlanesCard.ussrPlanesElite.setText(user.getUssr().get(1));
+                wtPlanesCard.ussrMedals.setText(user.getUssr().get(2));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
             try {
-                userStatsCard.winRatioArcade.setText(user.getWinRatio().get(0));
-                userStatsCard.winRatioHis.setText(user.getWinRatio().get(1));
-                userStatsCard.winRatioReal.setText(user.getWinRatio().get(2));
+                wtPlanesCard.germanyPlanes.setText(user.getGermany().get(0));
+                wtPlanesCard.germanyPlanesElite.setText(user.getGermany().get(1));
+                wtPlanesCard.germanyMedals.setText(user.getGermany().get(2));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
             try {
-                userStatsCard.flyoutsArcade.setText(user.getFlyouts().get(0));
-                userStatsCard.flyoutsHis.setText(user.getFlyouts().get(1));
-                userStatsCard.flyoutsReal.setText(user.getFlyouts().get(2));
+                wtPlanesCard.japanPlanes.setText(user.getJapan().get(0));
+                wtPlanesCard.japanPlanesElite.setText(user.getJapan().get(1));
+                wtPlanesCard.japanMedals.setText(user.getJapan().get(2));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
             try {
-                userStatsCard.deathsArcade.setText(user.getDeaths().get(0));
-                userStatsCard.deathsHis.setText(user.getDeaths().get(1));
-                userStatsCard.deathsReal.setText(user.getDeaths().get(2));
+                wtPlanesCard.britainPlanes.setText(user.getBritain().get(0));
+                wtPlanesCard.britainPlanesElite.setText(user.getBritain().get(1));
+                wtPlanesCard.britainMedals.setText(user.getBritain().get(2));
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else if(holder.getItemViewType() == 2 ) {
+            if (user != null) {
+
+                WtUserDetailStats wtUserDetailStats = (WtUserDetailStats) holder;
+                //wtUserDetailStats.infoText.setText(user.toString());
+                try {
+                    wtUserDetailStats.vicArcade.setText(user.getVictories().get(0));
+                    wtUserDetailStats.vicHis.setText(user.getVictories().get(1));
+                    wtUserDetailStats.vicReal.setText(user.getVictories().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
-            try {
-                userStatsCard.fighterArcade.setText(user.getBattleTime().get(0));
-                userStatsCard.fighterHis.setText(user.getBattleTime().get(1));
-                userStatsCard.fighterReal.setText(user.getBattleTime().get(2));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                try {
+                    wtUserDetailStats.missonArcade.setText(user.getMissions().get(0));
+                    wtUserDetailStats.missionHis.setText(user.getMissions().get(1));
+                    wtUserDetailStats.missionReal.setText(user.getMissions().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
-            try {
-                userStatsCard.attackerArcade.setText(user.getAttackerTime().get(0));
-                userStatsCard.attackerHis.setText(user.getAttackerTime().get(1));
-                userStatsCard.attackerReal.setText(user.getAttackerTime().get(2));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                try {
+                    wtUserDetailStats.winRatioArcade.setText(user.getWinRatio().get(0));
+                    wtUserDetailStats.winRatioHis.setText(user.getWinRatio().get(1));
+                    wtUserDetailStats.winRatioReal.setText(user.getWinRatio().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
-            try {
-                userStatsCard.bomberArcade.setText(user.getBomberTime().get(0));
-                userStatsCard.bomberHis.setText(user.getBomberTime().get(1));
-                userStatsCard.bomberReal.setText(user.getBomberTime().get(2));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                try {
+                    wtUserDetailStats.flyoutsArcade.setText(user.getFlyouts().get(0));
+                    wtUserDetailStats.flyoutsHis.setText(user.getFlyouts().get(1));
+                    wtUserDetailStats.flyoutsReal.setText(user.getFlyouts().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-            try {
-                userStatsCard.airArcade.setText(user.getAirTargets().get(0));
-                userStatsCard.airHis.setText(user.getAirTargets().get(1));
-                userStatsCard.airReal.setText(user.getAirTargets().get(2));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            try {
-                userStatsCard.groundArcade.setText(user.getGroundTargets().get(0));
-                userStatsCard.groundHis.setText(user.getGroundTargets().get(1));
-                userStatsCard.groundReal.setText(user.getGroundTargets().get(2));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                try {
+                    wtUserDetailStats.deathsArcade.setText(user.getDeaths().get(0));
+                    wtUserDetailStats.deathsHis.setText(user.getDeaths().get(1));
+                    wtUserDetailStats.deathsReal.setText(user.getDeaths().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-            try {
-                userStatsCard.lionsArcade.setText(user.getLions().get(0));
-                userStatsCard.lionsHis.setText(user.getLions().get(1));
-                userStatsCard.lionsReal.setText(user.getLions().get(2));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            try {
-                userStatsCard.xpArcade.setText(user.getXp().get(0));
-                userStatsCard.xpHis.setText(user.getXp().get(1));
-                userStatsCard.xpReal.setText(user.getXp().get(2));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                try {
+                    wtUserDetailStats.fighterArcade.setText(user.getBattleTime().get(0));
+                    wtUserDetailStats.fighterHis.setText(user.getBattleTime().get(1));
+                    wtUserDetailStats.fighterReal.setText(user.getBattleTime().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-            try {
-                userStatsCard.timeArcade.setText(user.getPlayTime().get(0));
-                userStatsCard.timeHis.setText(user.getPlayTime().get(1));
-                userStatsCard.timeReal.setText(user.getPlayTime().get(2));
-            } catch (Exception e) {
-                e.printStackTrace();
+
+                try {
+                    wtUserDetailStats.attackerArcade.setText(user.getAttackerTime().get(0));
+                    wtUserDetailStats.attackerHis.setText(user.getAttackerTime().get(1));
+                    wtUserDetailStats.attackerReal.setText(user.getAttackerTime().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                try {
+                    wtUserDetailStats.bomberArcade.setText(user.getBomberTime().get(0));
+                    wtUserDetailStats.bomberHis.setText(user.getBomberTime().get(1));
+                    wtUserDetailStats.bomberReal.setText(user.getBomberTime().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    wtUserDetailStats.airArcade.setText(user.getAirTargets().get(0));
+                    wtUserDetailStats.airHis.setText(user.getAirTargets().get(1));
+                    wtUserDetailStats.airReal.setText(user.getAirTargets().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    wtUserDetailStats.groundArcade.setText(user.getGroundTargets().get(0));
+                    wtUserDetailStats.groundHis.setText(user.getGroundTargets().get(1));
+                    wtUserDetailStats.groundReal.setText(user.getGroundTargets().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    wtUserDetailStats.lionsArcade.setText(user.getLions().get(0));
+                    wtUserDetailStats.lionsHis.setText(user.getLions().get(1));
+                    wtUserDetailStats.lionsReal.setText(user.getLions().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    wtUserDetailStats.xpArcade.setText(user.getXp().get(0));
+                    wtUserDetailStats.xpHis.setText(user.getXp().get(1));
+                    wtUserDetailStats.xpReal.setText(user.getXp().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    wtUserDetailStats.timeArcade.setText(user.getPlayTime().get(0));
+                    wtUserDetailStats.timeHis.setText(user.getPlayTime().get(1));
+                    wtUserDetailStats.timeReal.setText(user.getPlayTime().get(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -159,7 +236,7 @@ public class WtListAdapter extends RecyclerView.Adapter<WtListAdapter.UserStatsC
         return mDataset.size();
     }
 
-    public class UserStatsCard extends RecyclerView.ViewHolder {
+    public class WtUserDetailStats extends GenericHolder {
         @InjectView(R.id.vicArcade)
         TextView vicArcade;
         @InjectView(R.id.vicHis)
@@ -251,7 +328,78 @@ public class WtListAdapter extends RecyclerView.Adapter<WtListAdapter.UserStatsC
         @InjectView(R.id.timeReal)
         TextView timeReal;
 
-        public UserStatsCard(View itemView) {
+        public WtUserDetailStats(View itemView) {
+            super(itemView);
+            ButterKnife.inject(this, itemView);
+        }
+    }
+
+    public class GenericHolder extends RecyclerView.ViewHolder {
+
+        public GenericHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    public class WtProfileCard extends GenericHolder {
+
+        @InjectView(R.id.profilePic)
+        ImageView profilePic;
+
+        @InjectView(R.id.wt_userName)
+        TextView userName;
+
+        @InjectView(R.id.wt_clan)
+        TextView clan;
+
+        @InjectView(R.id.wt_register)
+        TextView registerDate;
+
+        public WtProfileCard(View itemView) {
+            super(itemView);
+            ButterKnife.inject(this, itemView);
+        }
+    }
+
+    public class WtPlanesCard extends GenericHolder {
+
+        @InjectView(R.id.usa_planes)
+        TextView usaPlanes;
+        @InjectView(R.id.usa_planes_elite)
+        TextView usaPlanesElite;
+        @InjectView(R.id.usa_medals)
+        TextView usaMedals;
+
+        @InjectView(R.id.ussr_planes)
+        TextView ussrPlanes;
+        @InjectView(R.id.ussr_planes_elite)
+        TextView ussrPlanesElite;
+        @InjectView(R.id.ussr_medals)
+        TextView ussrMedals;
+
+        @InjectView(R.id.britain_planes)
+        TextView britainPlanes;
+        @InjectView(R.id.britain_planes_elite)
+        TextView britainPlanesElite;
+        @InjectView(R.id.britain_medals)
+        TextView britainMedals;
+
+        @InjectView(R.id.germany_planes)
+        TextView germanyPlanes;
+        @InjectView(R.id.germany_planes_elite)
+        TextView germanyPlanesElite;
+        @InjectView(R.id.germany_medals)
+        TextView germanyMedals;
+
+        @InjectView(R.id.japan_planes)
+        TextView japanPlanes;
+        @InjectView(R.id.japan_planes_elite)
+        TextView japanPlanesElite;
+        @InjectView(R.id.japan_medals)
+        TextView japanMedals;
+
+
+        public WtPlanesCard(View itemView) {
             super(itemView);
             ButterKnife.inject(this, itemView);
         }

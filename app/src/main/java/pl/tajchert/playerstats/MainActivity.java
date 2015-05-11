@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
         setSpinnerGameSelection();
+        swipeRefresh.setEnabled(false);
         swipeRefresh.setOnRefreshListener(this);
         swipeRefresh.setColorSchemeColors(Color.DKGRAY, Color.GRAY, Color.BLACK);
 
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     }
                     ArrayList<ApiWarThunder.Result> results = new ArrayList<ApiWarThunder.Result>();
                     results.add(mainResult);
-                    mAdapter = new WtListAdapter(results);
+                    mAdapter = new WtListAdapter(results, MainActivity.this);
                     mRecyclerView.setAdapter(mAdapter);
                 }
                 if (swipeRefresh != null) {
@@ -237,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

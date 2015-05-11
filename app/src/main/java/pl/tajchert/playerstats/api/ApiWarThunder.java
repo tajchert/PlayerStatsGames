@@ -152,6 +152,7 @@ public class ApiWarThunder {
         private List<String> xp = new ArrayList<String>();
         private List<String> flyouts = new ArrayList<String>();
         private List<String> deaths = new ArrayList<String>();
+        private String icon;
 
         /**
          *
@@ -511,6 +512,22 @@ public class ApiWarThunder {
          */
         public void setDeaths(List<String> deaths) {
             this.deaths = deaths;
+        }
+
+        public String getIcon() {
+            return icon;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
+        }
+
+        public String getClan() {
+            return clan;
+        }
+
+        public void setClan(String clan) {
+            this.clan = clan;
         }
 
         @Override

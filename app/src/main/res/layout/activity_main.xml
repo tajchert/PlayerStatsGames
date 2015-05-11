@@ -31,6 +31,8 @@
                     android:id="@+id/inputName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff"
                     android:hint="User nick"
                     android:imeOptions="actionSearch"
                     android:inputType="text" />
@@ -42,8 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <Spinner
                     android:id="@+id/gameSelection"
@@ -65,8 +66,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
             android:scrollbars="vertical" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
