@@ -23,12 +23,15 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import io.fabric.sdk.android.Fabric;
 import pl.tajchert.playerstats.api.Api;
 import pl.tajchert.playerstats.api.ApiWarThunder;
 import pl.tajchert.playerstats.api.ApiWotStats;
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
@@ -336,6 +340,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        Fabric.with(this, new Crashlytics());
     }
 
 

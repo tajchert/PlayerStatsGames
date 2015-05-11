@@ -1,6 +1,7 @@
 package pl.tajchert.playerstats;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -87,100 +88,124 @@ public class WotListAdapter extends RecyclerView.Adapter<WotListAdapter.GenericH
         ApiWotStats.WotUserStats user = mDataset.get(i);
         if(user != null) {
             if( userStatsCard instanceof CardWotTop) {
-                ((CardWotTop) userStatsCard).rating.setText(user.rating);
-                ((CardWotTop) userStatsCard).avgDamage.setText(user.avgDamage);
-                ((CardWotTop) userStatsCard).avgExp.setText(user.avgExp);
-                ((CardWotTop) userStatsCard).battles.setText(user.battles);
-                ((CardWotTop) userStatsCard).winRatio.setText(user.winRatio);
+                try {
+                    ((CardWotTop) userStatsCard).rating.setText(user.rating);
+                    ((CardWotTop) userStatsCard).avgDamage.setText(user.avgDamage);
+                    ((CardWotTop) userStatsCard).avgExp.setText(user.avgExp);
+                    ((CardWotTop) userStatsCard).battles.setText(user.battles);
+                    ((CardWotTop) userStatsCard).winRatio.setText(user.winRatio);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else if( userStatsCard instanceof CardWotRatio) {
-                ((CardWotRatio) userStatsCard).ratioDamage.setText(user.damageRatio);
-                ((CardWotRatio) userStatsCard).ratioDamageDetails.setText(user.damageDetails);
-                ((CardWotRatio) userStatsCard).ratioTanks.setText(user.killRatio);
-                ((CardWotRatio) userStatsCard).ratioTanksDetails.setText(user.killDetails);
+                try {
+                    ((CardWotRatio) userStatsCard).battlesSurvived.setText(user.battlesSurvived);
+                    ((CardWotRatio) userStatsCard).hitRatio.setText(user.hitRatio);
+                    ((CardWotRatio) userStatsCard).pointsCapture.setText(user.caputrePoints);
+                    ((CardWotRatio) userStatsCard).pointsDefense.setText(user.capturePointsDefense);
+                    ((CardWotRatio) userStatsCard).ratioDamage.setText(user.damageRatio);
+                    ((CardWotRatio) userStatsCard).ratioDamageDetails.setText(user.damageDetails);
+                    ((CardWotRatio) userStatsCard).ratioTanks.setText(user.killRatio);
+                    ((CardWotRatio) userStatsCard).ratioTanksDetails.setText(user.killDetails);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else if( userStatsCard instanceof CardWotNations) {
-                ((CardWotNations) userStatsCard).nationBritain.setText(user.nationUk);
-                ((CardWotNations) userStatsCard).nationChina.setText(user.nationChina);
-                ((CardWotNations) userStatsCard).nationFrance.setText(user.nationFrance);
-                ((CardWotNations) userStatsCard).nationGermany.setText(user.nationGermany);
-                ((CardWotNations) userStatsCard).nationJapan.setText(user.nationJapan);
-                ((CardWotNations) userStatsCard).nationUsa.setText(user.nationUsa);
-                ((CardWotNations) userStatsCard).nationUssr.setText(user.nationUssr);
+                try {
+                    ((CardWotNations) userStatsCard).nationBritain.setText(user.nationUk);
+                    ((CardWotNations) userStatsCard).nationChina.setText(user.nationChina);
+                    ((CardWotNations) userStatsCard).nationFrance.setText(user.nationFrance);
+                    ((CardWotNations) userStatsCard).nationGermany.setText(user.nationGermany);
+                    ((CardWotNations) userStatsCard).nationJapan.setText(user.nationJapan);
+                    ((CardWotNations) userStatsCard).nationUsa.setText(user.nationUsa);
+                    ((CardWotNations) userStatsCard).nationUssr.setText(user.nationUssr);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else if( userStatsCard instanceof CardWotTankTypes) {
-                ((CardWotTankTypes) userStatsCard).light.setText(user.tanksLight);
-                ((CardWotTankTypes) userStatsCard).heavy.setText(user.tanksHeavy);
-                ((CardWotTankTypes) userStatsCard).medium.setText(user.tanksMed);
-                ((CardWotTankTypes) userStatsCard).td.setText(user.tankTd);
-                ((CardWotTankTypes) userStatsCard).arty.setText(user.tanksSpg);
+                try {
+                    ((CardWotTankTypes) userStatsCard).light.setText(user.tanksLight);
+                    ((CardWotTankTypes) userStatsCard).heavy.setText(user.tanksHeavy);
+                    ((CardWotTankTypes) userStatsCard).medium.setText(user.tanksMed);
+                    ((CardWotTankTypes) userStatsCard).td.setText(user.tankTd);
+                    ((CardWotTankTypes) userStatsCard).arty.setText(user.tanksSpg);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else if( userStatsCard instanceof CardWotNationsChart) {
-                ArrayList<Entry> yVals = new ArrayList<Entry>();
-                ArrayList<String> xVals = new ArrayList<String>();
-                xVals.add("USSR");
-                yVals.add(new Entry(Float.parseFloat(user.nationUssr.substring(0, user.nationUssr.indexOf(" (")).replace(",", "").trim()),0));
-                xVals.add("Germany");
-                yVals.add(new Entry(Float.parseFloat(user.nationGermany.substring(0, user.nationGermany.indexOf(" (")).replace(",","").trim()),1));
-                xVals.add("USA");
-                yVals.add(new Entry(Float.parseFloat(user.nationUsa.substring(0, user.nationUsa.indexOf(" (")).replace(",","").trim()),2));
-                xVals.add("France");
-                yVals.add(new Entry(Float.parseFloat(user.nationFrance.substring(0, user.nationFrance.indexOf(" (")).replace(",","").trim()),3));
-                xVals.add("Great Britain");
-                yVals.add(new Entry(Float.parseFloat(user.nationUk.substring(0, user.nationUk.indexOf(" (")).replace(",", "").trim()), 4));
-                xVals.add("China");
-                yVals.add(new Entry(Float.parseFloat(user.nationChina.substring(0, user.nationChina.indexOf(" (")).replace(",", "").trim()), 5));
-                xVals.add("Japan");
-                yVals.add(new Entry(Float.parseFloat(user.nationJapan.substring(0, user.nationJapan.indexOf(" (")).replace(",", "").trim()), 6));
-                PieChart chart = ((CardWotNationsChart) userStatsCard).chartNations;
-                chart.setRotationEnabled(false);
-                PieDataSet setTanks = new PieDataSet(yVals, "");
-                setTanks.setSliceSpace(3f);
-                setTanks.setSelectionShift(5f);
-                //setTanks.setColor(context.getResources().getColor(R.color.theme_main));
-                setTanks.setDrawValues(false);
-                int[] colors = {Color.parseColor("#831818"), Color.parseColor("#814f07"), Color.parseColor("#496877"), Color.parseColor("#2c2f54"), Color.parseColor("#2b591f"), Color.parseColor("#471952"), Color.parseColor("#8b8b8a")};
-                setTanks.setColors(colors);
+                try {
+                    ArrayList<Entry> yVals = new ArrayList<Entry>();
+                    ArrayList<String> xVals = new ArrayList<String>();
+                    xVals.add("USSR");
+                    yVals.add(new Entry(Float.parseFloat(user.nationUssr.substring(0, user.nationUssr.indexOf(" (")).replace(",", "").trim()),0));
+                    xVals.add("Germany");
+                    yVals.add(new Entry(Float.parseFloat(user.nationGermany.substring(0, user.nationGermany.indexOf(" (")).replace(",","").trim()),1));
+                    xVals.add("USA");
+                    yVals.add(new Entry(Float.parseFloat(user.nationUsa.substring(0, user.nationUsa.indexOf(" (")).replace(",","").trim()),2));
+                    xVals.add("France");
+                    yVals.add(new Entry(Float.parseFloat(user.nationFrance.substring(0, user.nationFrance.indexOf(" (")).replace(",","").trim()),3));
+                    xVals.add("Great Britain");
+                    yVals.add(new Entry(Float.parseFloat(user.nationUk.substring(0, user.nationUk.indexOf(" (")).replace(",", "").trim()), 4));
+                    xVals.add("China");
+                    yVals.add(new Entry(Float.parseFloat(user.nationChina.substring(0, user.nationChina.indexOf(" (")).replace(",", "").trim()), 5));
+                    xVals.add("Japan");
+                    yVals.add(new Entry(Float.parseFloat(user.nationJapan.substring(0, user.nationJapan.indexOf(" (")).replace(",", "").trim()), 6));
+                    PieChart chart = ((CardWotNationsChart) userStatsCard).chartNations;
+                    chart.setRotationEnabled(false);
+                    PieDataSet setTanks = new PieDataSet(yVals, "");
+                    setTanks.setSliceSpace(3f);
+                    setTanks.setSelectionShift(5f);
+                    //setTanks.setColor(context.getResources().getColor(R.color.theme_main));
+                    setTanks.setDrawValues(false);
+                    int[] colors = {Color.parseColor("#831818"), Color.parseColor("#814f07"), Color.parseColor("#496877"), Color.parseColor("#2c2f54"), Color.parseColor("#2b591f"), Color.parseColor("#471952"), Color.parseColor("#8b8b8a")};
+                    setTanks.setColors(colors);
 
-                PieData data = new PieData(xVals, setTanks);
-                data.setValueTextSize(11f);
-                data.setValueTextColor(Color.BLACK);
-                chart.setData(data);
-                chart.getLegend().setEnabled(false);
-                chart.setDescription("");
-                chart.invalidate();
+                    PieData data = new PieData(xVals, setTanks);
+                    data.setValueTextSize(11f);
+                    data.setValueTextColor(Color.BLACK);
+                    chart.setData(data);
+                    chart.getLegend().setEnabled(false);
+                    chart.setDescription("");
+                    chart.invalidate();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             } else if( userStatsCard instanceof CardWotTankTypesChart) {
-                ArrayList<Entry> yVals = new ArrayList<Entry>();
-                ArrayList<String> xVals = new ArrayList<String>();
-                xVals.add("Light");
-                yVals.add(new Entry(Float.parseFloat(user.tanksLight.substring(0, user.tanksLight.indexOf(" (")).replace(",", "").trim()),0));
-                xVals.add("Medium");
-                yVals.add(new Entry(Float.parseFloat(user.tanksMed.substring(0, user.tanksMed.indexOf(" (")).replace(",","").trim()),1));
-                xVals.add("Heavy");
-                yVals.add(new Entry(Float.parseFloat(user.tanksHeavy.substring(0, user.tanksHeavy.indexOf(" (")).replace(",","").trim()),2));
-                xVals.add("TD");
-                yVals.add(new Entry(Float.parseFloat(user.tankTd.substring(0, user.tankTd.indexOf(" (")).replace(",","").trim()),3));
-                xVals.add("Arty");
-                yVals.add(new Entry(Float.parseFloat(user.tanksSpg.substring(0, user.tanksSpg.indexOf(" (")).replace(",", "").trim()), 4));
-                RadarChart chart = ((CardWotTankTypesChart) userStatsCard).chartTankTypes;
-                chart.setRotationEnabled(false);
-                RadarDataSet setTanks = new RadarDataSet(yVals, "");
-                setTanks.setColor(context.getResources().getColor(R.color.theme_main));
-                setTanks.setDrawFilled(true);
-                setTanks.setLineWidth(2f);
-                setTanks.setValueTextSize(9f);
+                try {
+                    ArrayList<Entry> yVals = new ArrayList<Entry>();
+                    ArrayList<String> xVals = new ArrayList<String>();
+                    xVals.add("Light");
+                    yVals.add(new Entry(Float.parseFloat(user.tanksLight.substring(0, user.tanksLight.indexOf(" (")).replace(",", "").trim()),0));
+                    xVals.add("Medium");
+                    yVals.add(new Entry(Float.parseFloat(user.tanksMed.substring(0, user.tanksMed.indexOf(" (")).replace(",","").trim()),1));
+                    xVals.add("Heavy");
+                    yVals.add(new Entry(Float.parseFloat(user.tanksHeavy.substring(0, user.tanksHeavy.indexOf(" (")).replace(",","").trim()),2));
+                    xVals.add("TD");
+                    yVals.add(new Entry(Float.parseFloat(user.tankTd.substring(0, user.tankTd.indexOf(" (")).replace(",","").trim()),3));
+                    xVals.add("Arty");
+                    yVals.add(new Entry(Float.parseFloat(user.tanksSpg.substring(0, user.tanksSpg.indexOf(" (")).replace(",", "").trim()), 4));
+                    RadarChart chart = ((CardWotTankTypesChart) userStatsCard).chartTankTypes;
+                    chart.setRotationEnabled(false);
+                    RadarDataSet setTanks = new RadarDataSet(yVals, "");
+                    setTanks.setColor(context.getResources().getColor(R.color.theme_main));
+                    setTanks.setDrawFilled(true);
+                    setTanks.setLineWidth(2f);
+                    setTanks.setValueTextSize(9f);
 
-                ArrayList<RadarDataSet> sets = new ArrayList<RadarDataSet>();
-                sets.add(setTanks);
-                RadarData data = new RadarData(xVals, sets);
-                /*ArrayList<RadarDataSet> sets = (ArrayList<RadarDataSet>) chart.getData() .getDataSets();
-                for (RadarDataSet set : sets) {
-                    set.setDrawFilled(true);
-                }*/
-                chart.getXAxis().setEnabled(true);
-                chart.getYAxis().setEnabled(false);
-                chart.setData(data);
-                //chart.getLegend().setEnabled(false);
-                chart.setDescription("");
-                chart.invalidate();
+                    ArrayList<RadarDataSet> sets = new ArrayList<RadarDataSet>();
+                    sets.add(setTanks);
+                    RadarData data = new RadarData(xVals, sets);
+                    chart.getXAxis().setEnabled(true);
+                    chart.getYAxis().setEnabled(false);
+                    chart.setData(data);
+                    chart.setDescription("");
+                    chart.invalidate();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-            //userStatsCard.infoText.setText(user.toString());
         }
     }
 
@@ -220,6 +245,18 @@ public class WotListAdapter extends RecyclerView.Adapter<WotListAdapter.GenericH
     }
 
     public class CardWotRatio extends GenericHolder {
+
+        @InjectView(R.id.wot_battles_survived)
+        TextView battlesSurvived;
+
+        @InjectView(R.id.wot_hit_ratio)
+        TextView hitRatio;
+
+        @InjectView(R.id.wot_capture_points)
+        TextView pointsCapture;
+
+        @InjectView(R.id.wot_defense_points)
+        TextView pointsDefense;
 
         @InjectView(R.id.wot_ratio_tanks)
         TextView ratioTanks;
