@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme_main">#ff4caf50</color>
+    <color name="theme_main_dark">#ff388e3c</color>
+    <color name="theme_accent">#ffcddc39</color>
+    <color name="theme_main_background">#344caf50</color>
+</resources>

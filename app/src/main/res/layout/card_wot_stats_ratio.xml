@@ -1,0 +1,89 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="15dp"
+    card_view:cardCornerRadius="1dp"
+    card_view:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Tanks destroyed/lost"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/wot_ratio_tanks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="X"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/wot_ratio_tanks_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="X/X"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Damage caused/received"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/wot_ratio_damage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="X"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/wot_ratio_damge_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="X/X"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#000" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
