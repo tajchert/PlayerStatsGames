@@ -1,5 +1,7 @@
 package pl.tajchert.playerstats.api;
 
+import java.util.Calendar;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 
@@ -23,7 +25,14 @@ public class Api {
                 .setEndpoint(ApiConstants.API_URL_WOT)
                 .build();
         IWotApi wotApi = restAdapter.create(IWotApi.class);
-        wotApi.getWotUserId(username, "2015-5-8", wotUserListCallback);
+        android.text.format.DateFormat df = new android.text.format.DateFormat();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -5);
+        String date = df.format("yyyy-M-d", calendar.getTime()).toString();
+        if(date == null || date.length() == 0) {
+            date = "2015-5-8";
+        }
+        wotApi.getWotUserId(username, date, wotUserListCallback);
     }
 
     public static void getWotUserStats(String username, String userId, Callback<ApiWotStats> wotStatsCallback){

@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     return false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     swipeRefresh.setRefreshing(true);
-                    if(userNameEdit!= null) {
+                    if (userNameEdit != null) {
                         userNameEdit.dismissDropDown();
                     }
                     if (spinnerGameSelection.getSelectedItemId() == 0) {
@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
     }
 
     private void searchWarThunder(String username) {
@@ -151,11 +150,21 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void searchWot(final String username) {
+        if(username == null) {
+            if (swipeRefresh != null) {
+                swipeRefresh.setRefreshing(false);
+            }
+            return;
+        }
         Callback<ApiWotUserList> apiWotUserListCallback = new Callback<ApiWotUserList>() {
             @Override
             public void success(ApiWotUserList responseObject, Response response) {
-                Log.d(TAG, "success :" + responseObject.dataTop.getResult().toString());
-                if(responseObject!= null && responseObject.dataTop != null && responseObject.dataTop.getResult() != null ) {
+                if(responseObject!= null
+                        && responseObject.dataTop != null
+                        && responseObject.dataTop.getResult() != null
+                        && responseObject.dataTop.getResult().getUserData(username) != null
+                        && responseObject.dataTop.getResult().getUserData(username).size() >= 1
+                        && responseObject.dataTop.getResult().getUserData(username).get(0) != null ) {
                     String userId = responseObject.dataTop.getResult().getUserData(username).get(0);
                     Log.d(TAG, "success id: " + userId);
                     if(userId != null) {
