@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +33,7 @@ import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
 import pl.tajchert.playerstats.api.Api;
 import pl.tajchert.playerstats.api.ApiWarThunder;
+import pl.tajchert.playerstats.api.ApiWarThunderBests;
 import pl.tajchert.playerstats.api.ApiWotStats;
 import pl.tajchert.playerstats.api.ApiWotUserList;
 import retrofit.Callback;
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         swipeRefresh.setEnabled(false);
         swipeRefresh.setOnRefreshListener(this);
         swipeRefresh.setColorSchemeColors(Color.DKGRAY, Color.GRAY, Color.BLACK);
+        getBestWarThunder();
 
         userNameEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -147,6 +148,50 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         };
         Api.getWarThunderUser(username, apiWarThunderCallback);
+    }
+
+    private void getBestWarThunder() {
+        Callback<ApiWarThunderBests> apiWarThunderCallback = new Callback<ApiWarThunderBests>() {
+            @Override
+            public void success(ApiWarThunderBests responseObject, Response response) {
+                Log.d(TAG, "success :" + responseObject.results.toString());
+                if (responseObject.results != null) {
+                    Callback<String> callback = new Callback<String>() {
+                        @Override
+                        public void success(String s, Response response) {
+                            if(s != null) {
+                                userNameEdit.setText(s);
+                                searchWarThunder(s);
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+
+                        }
+                    };
+                    mAdapter = new WtBestPlayersCardListAdapter((ArrayList<ApiWarThunderBests.Result>)responseObject.results, MainActivity.this, callback);
+                    mRecyclerView.setAdapter(mAdapter);
+                } else {
+                    //Show no results
+                    mAdapter = new SimpleListAdapter();
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+                showResults();
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                if(retrofitError.isNetworkError()) {
+                    //post no Internet event
+                }
+                Log.d(TAG, "failure :" + retrofitError.getLocalizedMessage());
+                if (swipeRefresh != null) {
+                    swipeRefresh.setRefreshing(false);
+                }
+            }
+        };
+        Api.getWarThunderBest(apiWarThunderCallback);
     }
 
     private void searchWot(final String username) {
@@ -315,7 +360,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onResume() {
         super.onResume();
-        EventBus.getDefault().register(this);
+        try {
+            EventBus.getDefault().register(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -345,14 +394,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        Fabric.with(this, new Crashlytics());
-    }
-
-
 
     @Override
     public void onRefresh() {

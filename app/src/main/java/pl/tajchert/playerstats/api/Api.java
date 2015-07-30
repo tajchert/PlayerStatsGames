@@ -12,12 +12,19 @@ public class Api {
     private static final String TAG = "Api";
 
     public static void getWarThunderUser(String username, Callback<ApiWarThunder> warThunderCallback){
-        //username = "http://warthunder.com/en/community/userinfo/nick=" + username;
         final RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(ApiConstants.API_URL_IMPORTIO)
                 .build();
         IWarThunderApi thunderApi = restAdapter.create(IWarThunderApi.class);
         thunderApi.getWarThunderUser(username, ApiConstants.IMPORTIO_API_USER_KEY, ApiConstants.IMPORTIO_API_KEY, warThunderCallback);
+    }
+
+    public static void getWarThunderBest(Callback<ApiWarThunderBests> warThunderCallback){
+        final RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(ApiConstants.API_URL_IMPORTIO)
+                .build();
+        IWarThunderApi thunderApi = restAdapter.create(IWarThunderApi.class);
+        thunderApi.getWarThunderBestPlayers(ApiConstants.IMPORTIO_API_USER_KEY, ApiConstants.IMPORTIO_API_KEY, warThunderCallback);
     }
 
     public static void getWotUserList(String username, Callback<ApiWotUserList> wotUserListCallback){

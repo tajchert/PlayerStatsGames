@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/row_wot_name"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="X"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_wot_win_ratio"
+        android:fontFamily="sans-serif"
+        android:layout_toLeftOf="@+id/row_wot_wins"
+        android:gravity="center"
+        android:text="X"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_wot_wins"
+        android:fontFamily="sans-serif"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_toLeftOf="@+id/row_wot_targets_air"
+        android:text="X"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_wot_targets_air"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="X"
+        android:layout_toLeftOf="@+id/row_wot_targets_ground"
+        android:visibility="gone"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_wot_targets_ground"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_toLeftOf="@+id/row_wot_lions"
+        android:text="X"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_wot_lions"
+        android:fontFamily="sans-serif"
+        android:layout_toLeftOf="@+id/row_wot_deaths"
+        android:gravity="center"
+        android:text="X"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_wot_deaths"
+        android:fontFamily="sans-serif"
+        android:layout_toLeftOf="@+id/row_wot_exp"
+        android:gravity="center"
+        android:text="X"
+        android:layout_marginLeft="5dp"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_wot_exp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/row_wot_battles"
+        android:text="X"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_wot_battles"
+        android:layout_marginLeft="5dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:text="X"
+        android:layout_marginRight="5dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000" />
+
+</RelativeLayout>
